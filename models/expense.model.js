@@ -1,4 +1,4 @@
-import moogoose from "mongoose";
+import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema({
 
@@ -23,6 +23,7 @@ const expenseSchema = new mongoose.Schema({
         enum: {
             values: ['Food', 'Transportation', 'Entertainment', 'Utilities', 'Other'],
             message: 'Please enter a valid category'
+
         }
     },
 
@@ -39,3 +40,5 @@ const expenseSchema = new mongoose.Schema({
     },
 },
 {timestamps: true});
+
+export default mongoose.model('Expense', expenseSchema);
