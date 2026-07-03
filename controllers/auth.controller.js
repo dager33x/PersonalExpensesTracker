@@ -61,20 +61,23 @@ export const Signup = async (req, res, next) => {
 export const Signin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+
         const user = await User.findOne({ email });
 
-        if(!user) {
-            const error = new Error('Invalid email or password');
-            error.statusCode = 401;
-            throw error;
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password"
+            });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if(!isPasswordValid) {
-            const error = new Error('Invalid email or password');
-            error.statusCode = 401;
-            throw error;
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password"
+            });
         }
 
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRE_IN });
@@ -86,15 +89,21 @@ export const Signin = async (req, res, next) => {
             maxAge: 24 * 60 * 60 * 1000
         });
 
-        res.status(200).json({ 
+        res.status(200).json({
             success: true,
-            message: "User signed in successfully", token });
+            message: "User signed in successfully",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
 
-    }catch(error){
+    } catch (error) {
         next(error);
     }
-
-}
+};
 
 export const Signout = async (req, res, next) => {
     try {

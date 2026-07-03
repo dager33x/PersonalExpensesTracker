@@ -1,0 +1,329 @@
+:root {
+  color-scheme: dark;
+  --bg: #050b16;
+  --bg-2: #091425;
+  --panel: rgba(10, 18, 35, 0.82);
+  --panel-strong: rgba(8, 15, 31, 0.96);
+  --border: rgba(148, 163, 184, 0.16);
+  --text: #e5edf8;
+  --muted: #93a4ba;
+  --accent: #57c7ff;
+  --accent-strong: #1aa7f1;
+  --accent-soft: rgba(87, 199, 255, 0.14);
+  --danger: #ff7f97;
+  --danger-bg: rgba(255, 127, 151, 0.12);
+  --success: #39d39b;
+  --success-bg: rgba(57, 211, 155, 0.12);
+  --shadow: 0 26px 70px rgba(2, 6, 23, 0.46);
+  --radius: 28px;
+  --font-body: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(87, 199, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 85% 10%, rgba(26, 167, 241, 0.12), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(57, 211, 155, 0.08), transparent 22%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(70px);
+  opacity: 0.7;
+}
+
+body::before {
+  top: -80px;
+  left: -70px;
+  width: 240px;
+  height: 240px;
+  background: rgba(56, 189, 248, 0.18);
+}
+
+body::after {
+  right: -90px;
+  bottom: -100px;
+  width: 320px;
+  height: 320px;
+  background: rgba(14, 165, 233, 0.15);
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px;
+}
+
+.ledger-card {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background:
+    linear-gradient(180deg, rgba(87, 199, 255, 0.08), transparent 36%),
+    var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 38px 38px 34px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+.ledger-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top right, rgba(87, 199, 255, 0.12), transparent 26%),
+    radial-gradient(circle at bottom left, rgba(57, 211, 155, 0.08), transparent 24%);
+}
+
+.ledger-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.stamp {
+  position: absolute;
+  top: -18px;
+  right: -12px;
+  width: 108px;
+  height: 108px;
+  border: 1.5px dashed rgba(87, 199, 255, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotate(9deg);
+  background: rgba(8, 15, 31, 0.96);
+  box-shadow: 0 12px 32px rgba(87, 199, 255, 0.16);
+}
+
+.stamp span {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #c8eefc;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  color: var(--text);
+  max-width: 12ch;
+}
+
+.lede {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 42ch;
+}
+
+.rule {
+  height: 1px;
+  background: rgba(148, 163, 184, 0.1);
+  margin: 18px 0;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.row {
+  display: grid;
+  gap: 8px;
+}
+
+.row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.text-link {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: #c8eefc;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+input {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(3, 8, 20, 0.55);
+  border-radius: 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  padding: 13px 14px;
+}
+
+input::placeholder {
+  color: #7f93ab;
+}
+
+input:focus-visible {
+  border-color: rgba(87, 199, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(87, 199, 255, 0.12);
+  background: rgba(3, 8, 20, 0.72);
+}
+
+button[type="submit"] {
+  margin-top: 2px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #88d8ff, var(--accent-strong));
+  color: #00111f;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease, opacity 0.15s ease;
+  box-shadow: 0 12px 32px rgba(87, 199, 255, 0.24);
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+button[type="submit"]:focus-visible {
+  outline: 2px solid rgba(87, 199, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.message,
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  display: none;
+  font-family: var(--font-body);
+}
+
+.message.visible {
+  display: block;
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid rgba(57, 211, 155, 0.16);
+}
+
+.error.visible {
+  display: block;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(255, 127, 151, 0.16);
+}
+
+.footnote {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footnote a {
+  color: #c8eefc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footnote a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ledger-card {
+    padding: 30px 22px 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+    max-width: 100%;
+  }
+
+  .stamp {
+    width: 88px;
+    height: 88px;
+    top: -14px;
+    right: -8px;
+  }
+
+  .stamp span {
+    font-size: 8.5px;
+  }
+}

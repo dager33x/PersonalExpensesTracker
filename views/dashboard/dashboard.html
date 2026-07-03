@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Expense Tracker | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/dashboard/dashboard.css" />
+  <script src="/dashboard/dashboard.js" defer></script>
+</head>
+<body>
+  <div class="backdrop backdrop-one"></div>
+  <div class="backdrop backdrop-two"></div>
+
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div>
+          <p class="brand-kicker">Personal Expense Tracker</p>
+          <h1>Dashboard</h1>
+        </div>
+      </div>
+
+      <section class="sidebar-card">
+        <p class="sidebar-label">Overview</p>
+        <div class="mini-stat">
+          <span>Wallet balance</span>
+          <strong id="walletBalance">0.00</strong>
+        </div>
+        <div class="mini-stat">
+          <span>Monthly spend</span>
+          <strong id="monthlySpend">0.00</strong>
+        </div>
+        <div class="mini-stat">
+          <span>Total entries</span>
+          <strong id="expenseCount">0</strong>
+        </div>
+      </section>
+
+      <section class="sidebar-card wallet-card">
+        <p class="sidebar-label">Wallet balance</p>
+        <form id="walletForm" class="wallet-form">
+          <label class="budget-field">
+            <span>Remaining balance</span>
+            <input id="walletBalanceInput" type="number" min="0" step="0.01" placeholder="1000" />
+          </label>
+          <p class="wallet-note">Enter the amount left in your e-wallet, then save it here.</p>
+          <p id="walletMessage" class="message" aria-live="polite"></p>
+          <button id="walletSaveBtn" class="ghost-btn wallet-save" type="submit">Save balance</button>
+        </form>
+      </section>
+
+      <section class="sidebar-card chart-card">
+        <p class="sidebar-label">Category mix</p>
+        <div id="categoryBars" class="bars" aria-label="Category breakdown"></div>
+      </section>
+
+      <section class="sidebar-card budget-card">
+        <p class="sidebar-label">Budget goals</p>
+        <p class="card-note">Monthly target and category goals live here. Scroll a little lower if you do not see every field on smaller screens.</p>
+        <div class="budget-summary">
+          <div>
+            <span>Monthly goal</span>
+            <strong id="budgetMonthlyText">0.00</strong>
+          </div>
+          <div>
+            <span>Remaining</span>
+            <strong id="budgetRemainingText">0.00</strong>
+          </div>
+        </div>
+        <div class="budget-bar">
+          <div id="budgetProgress" class="budget-bar-fill"></div>
+        </div>
+        <form id="budgetForm" class="budget-form">
+          <label class="budget-field">
+            <span>Monthly total</span>
+            <input id="budgetMonthlyTotal" type="number" min="0" step="0.01" placeholder="5000" />
+          </label>
+
+          <div class="budget-grid">
+            <label class="budget-field">
+              <span>Food</span>
+              <input id="budgetFood" type="number" min="0" step="0.01" placeholder="0" />
+            </label>
+            <label class="budget-field">
+              <span>Transport</span>
+              <input id="budgetTransportation" type="number" min="0" step="0.01" placeholder="0" />
+            </label>
+            <label class="budget-field">
+              <span>Entertainment</span>
+              <input id="budgetEntertainment" type="number" min="0" step="0.01" placeholder="0" />
+            </label>
+            <label class="budget-field">
+              <span>Utilities</span>
+              <input id="budgetUtilities" type="number" min="0" step="0.01" placeholder="0" />
+            </label>
+            <label class="budget-field budget-field-full">
+              <span>Other</span>
+              <input id="budgetOther" type="number" min="0" step="0.01" placeholder="0" />
+            </label>
+        </div>
+
+          <p id="budgetMessage" class="message" aria-live="polite"></p>
+          <button id="budgetSaveBtn" class="ghost-btn budget-save" type="submit">Save goals</button>
+        </form>
+      </section>
+
+      <div class="sidebar-actions">
+        <button id="refreshBtn" class="ghost-btn" type="button">Refresh data</button>
+        <button id="signOutBtn" class="ghost-btn danger" type="button">Sign out</button>
+      </div>
+    </aside>
+
+    <section class="main-panel">
+      <header class="hero">
+        <div class="hero-copy-wrap">
+          <p class="eyebrow">Money at a glance</p>
+          <h2>Track, add, and review spending without leaving the page.</h2>
+          <p class="hero-copy">
+            This dashboard connects directly to your authenticated expense API. Add a record, refresh the list, and keep the session secured with your login cookie.
+          </p>
+        </div>
+        <div class="hero-card">
+          <p>Quick total</p>
+          <strong id="quickTotal">0.00</strong>
+          <span>Updated from your current expense list</span>
+          <div class="hero-chip-row">
+            <span class="hero-chip">Live sync</span>
+            <span class="hero-chip">Private session</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="panel coach-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">AI coach</p>
+            <h3>Ask for spending advice</h3>
+          </div>
+          <span class="pill">Responses API</span>
+        </div>
+
+        <div class="coach-layout">
+          <div class="coach-feed" id="coachFeed" aria-live="polite"></div>
+
+          <form id="coachForm" class="coach-form">
+            <label class="coach-input-wrap" for="coachPrompt">
+              <span>Question</span>
+              <textarea
+                id="coachPrompt"
+                rows="3"
+                placeholder="How can I reduce my spending this month?"
+              ></textarea>
+            </label>
+
+            <div class="coach-suggestions" aria-label="Quick prompts">
+              <button type="button" class="coach-chip" data-prompt="Where am I overspending the most?">Overspending</button>
+              <button type="button" class="coach-chip" data-prompt="Give me 3 ways to cut expenses this month.">Cut costs</button>
+              <button type="button" class="coach-chip" data-prompt="What is my biggest spending category and how can I reduce it?">Biggest category</button>
+            </div>
+
+            <div class="coach-actions">
+              <p id="coachStatus" class="message">Ask the coach anything about your spending.</p>
+              <button id="coachSubmitBtn" type="submit" class="primary-btn">Get advice</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel form-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">New expense</p>
+              <h3>Add a transaction</h3>
+            </div>
+            <span class="pill">Protected</span>
+          </div>
+
+          <form id="expenseForm" class="expense-form">
+            <label class="field">
+              <span>Title</span>
+              <input id="title" name="title" type="text" placeholder="Groceries" required />
+            </label>
+
+            <div class="two-up">
+              <label class="field">
+                <span>Amount</span>
+                <input id="amount" name="amount" type="number" step="0.01" min="0" placeholder="1250" required />
+              </label>
+
+              <label class="field">
+                <span>Date</span>
+                <input id="date" name="date" type="date" required />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Category</span>
+              <select id="category" name="category" required>
+                <option value="Food">Food</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Description</span>
+              <textarea id="description" name="description" rows="3" placeholder="Optional notes about this purchase"></textarea>
+            </label>
+
+            <p id="formMessage" class="message" aria-live="polite"></p>
+
+            <button id="saveExpenseBtn" type="submit" class="primary-btn">Save expense</button>
+          </form>
+        </section>
+
+        <section class="panel list-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Recent activity</p>
+              <h3>Latest expenses</h3>
+            </div>
+            <span id="lastSync" class="sync">Not synced yet</span>
+          </div>
+
+          <div id="expenseList" class="expense-list"></div>
+        </section>
+      </section>
+
+      <section class="content-grid analytics-grid">
+        <section class="panel trends-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Spending trend</p>
+              <h3>Last 6 months</h3>
+            </div>
+            <span class="pill">Trend</span>
+          </div>
+          <div id="trendChart" class="trend-chart" aria-label="Monthly spending trend"></div>
+        </section>
+
+        <section class="panel recurring-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Recurring spend</p>
+              <h3>Likely repeated charges</h3>
+            </div>
+            <span class="pill">Detected</span>
+          </div>
+          <div id="recurringList" class="recurring-list"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,11 +1,36 @@
 import { Router } from "express";
-import authorize from "../middlewares/auth.middleware.js";
-import { createExpense, getExpense, getExpenses } from "../controllers/expenses.controller.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
+import expenseMiddleware from "../middlewares/expenses.middleware.js";
+import { createExpense, deleteExpense, getExpense, getExpenses, updateExpense } from "../controllers/expenses.controller.js";
+import validateExpense from "../validations/expense.validation.js";
+
+
 const expenseRouter = Router();
 
-expenseRouter.post("/create", authorize, createExpense);
-expenseRouter.get("/list", authorize, getExpenses);
-expenseRouter.get("/:id", authorize, getExpense);
+expenseRouter.post("/create", 
+    authMiddleware, 
+    validateExpense,
+    createExpense);
+
+expenseRouter.get("/list", 
+    authMiddleware, 
+    getExpenses);
+
+expenseRouter.get("/:id", 
+    authMiddleware, 
+    expenseMiddleware, 
+    getExpense);
+
+expenseRouter.put("/:id",
+    authMiddleware,
+    expenseMiddleware,
+    validateExpense,
+    updateExpense);
+
+expenseRouter.delete("/:id",
+    authMiddleware,
+    expenseMiddleware,
+    deleteExpense);
 
 
 

@@ -15,10 +15,4 @@ Personal Expense Tracker is a full-stack web application that helps users manage
 - MongoDB
 - Mongoose
 - JWT
-
-## Getting Started
-1. Install dependencies:
-   npm install
-2. Start the server:
-   npm run dev
-3. Use the API endpoints for authentication and expense management.
+- Arcjet 

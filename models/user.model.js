@@ -22,6 +22,25 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a password'],
         minlength: 6,
     },
+
+    budgetGoals: {
+        monthlyTotal: {
+            type: Number,
+            default: 0,
+            min: 0,
+        },
+        categories: {
+            type: Map,
+            of: Number,
+            default: {},
+        },
+    },
+
+    walletBalance: {
+        type: Number,
+        default: 0,
+        min: 0,
+    },
 },
 
 {timestamps: true});
