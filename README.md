@@ -1,12 +1,21 @@
 # Personal Expense Tracker
 
-Personal Expense Tracker is a full-stack web application that helps users manage their finances by recording daily expenses. Users can securely create an account, log in, organize expenses by category, and monitor their spending through a clean and user-friendly interface.
+Personal Expense Tracker is a full-stack finance app built to help you keep an honest picture of your money without making the process feel complicated. You can create an account, log in safely, add and organize expenses, set budget goals, save your wallet balance, and review your spending in a dashboard that is easy to understand at a glance. It also includes a basic local AI coach, so even if the external AI service is unavailable, you still get practical spending advice.
 
 ## Features
 - User signup and login
-- Create and view personal expenses
+- Secure JWT-based authentication
+- Create, edit, and delete personal expenses
 - Organize expenses by category
-- Secure authentication with JWT
+- View recent spending activity
+- Track monthly spending totals
+- Save and update wallet balance
+- Set monthly budget goals
+- Monitor category-based budget targets
+- View recurring spend patterns
+- See last 6 months of spending trends
+- Get spending advice from the AI coach
+- Fall back to local AI advice when the external AI service is limited or unavailable
 - MongoDB-backed data storage
 
 ## Tech Stack
@@ -16,3 +25,29 @@ Personal Expense Tracker is a full-stack web application that helps users manage
 - Mongoose
 - JWT
 - Arcjet 
+- Google Gemini API for the AI coach
+- Local fallback coach logic for basic advice
+
+## What It Helps With
+- Keeping track of where your money goes
+- Spotting habits that quietly eat into your budget
+- Storing a realistic wallet balance
+- Setting simple spending goals you can actually follow
+- Getting quick, friendly AI guidance when you need a nudge
+
+## Getting Started
+1. Install dependencies:
+   `npm install`
+2. Create your local env file:
+   - copy `.env.example` to `.env.development.local`
+   - fill in `DB_URI`, `JWT_SECRET`, `ARCJET_KEY`, and `GEMINI_API_KEY`
+3. Start the server:
+   `npm run dev`
+4. Open the app and start adding your expenses.
+
+## AI Coach Setup
+- The app uses the Google Gemini API as the primary AI coach.
+- If the Gemini request fails or hits a quota limit, the app shows a local fallback coach response instead.
+- Required env var: `GEMINI_API_KEY`
+- Optional env var: `GEMINI_MODEL`
+- After updating env vars, restart the server so the new values load.
