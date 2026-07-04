@@ -5,6 +5,8 @@ Personal Expense Tracker is a full-stack finance app built to help you keep an h
 ## Features
 - User signup and login
 - Secure JWT-based authentication
+- Email verification during signup
+- Password reset by email
 - Create, edit, and delete personal expenses
 - Organize expenses by category
 - View recent spending activity
@@ -40,7 +42,7 @@ Personal Expense Tracker is a full-stack finance app built to help you keep an h
    `npm install`
 2. Create your local env file:
    - copy `.env.example` to `.env.development.local`
-   - fill in `DB_URI`, `JWT_SECRET`, `ARCJET_KEY`, and `GEMINI_API_KEY`
+   - fill in `DB_URI`, `JWT_SECRET`, `ARCJET_KEY`, `GEMINI_API_KEY`, and the SMTP email settings
 3. Start the server:
    `npm run dev`
 4. Open the app and start adding your expenses.
@@ -51,3 +53,11 @@ Personal Expense Tracker is a full-stack finance app built to help you keep an h
 - Required env var: `GEMINI_API_KEY`
 - Optional env var: `GEMINI_MODEL`
 - After updating env vars, restart the server so the new values load.
+
+## Email Setup
+- Set `SMTP_SERVER`, `SMTP_PORT`, `EMAIL`, and `PASSWORD` in your local env file.
+- `EMAIL` should be the Gmail address you want the app to send from.
+- `PASSWORD` should be the Gmail app password, not your normal Gmail login password.
+- Set `APP_URL` to the URL users should open from the verification and reset links.
+- Optional: set `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_UPLOAD_PRESET`, and `CLOUDINARY_FOLDER` if you want users to upload a custom profile photo.
+- If those Cloudinary values are not set, the dashboard keeps using the default DiceBear avatar.

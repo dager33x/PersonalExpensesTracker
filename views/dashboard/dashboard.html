@@ -16,15 +16,30 @@
 
   <main class="app-shell">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">P</div>
-        <div>
-          <p class="brand-kicker">Personal Expense Tracker</p>
-          <h1>Dashboard</h1>
+      <section class="sidebar-card profile-card">
+        <div class="profile-card-top">
+          <div id="profileAvatar" class="profile-avatar">
+            <img id="profileAvatarImg" alt="" />
+            <span id="profileAvatarFallback">P</span>
+          </div>
+          <div class="profile-copy">
+            <p id="profileKicker" class="profile-kicker">Signed in as</p>
+            <h1 id="profileName">Profile</h1>
+            <p id="profileEmail" class="profile-email"></p>
+            <p id="profileSex" class="profile-sex"></p>
+          </div>
         </div>
-      </div>
+        <div class="profile-card-footer">
+          <div class="profile-actions">
+            <label class="profile-upload-btn" for="profilePhotoInput">Upload photo</label>
+            <input id="profilePhotoInput" class="sr-only" type="file" accept="image/*" />
+            <button id="profileResetBtn" class="ghost-btn profile-reset-btn" type="button">Use default</button>
+          </div>
+          <p id="profileMessage" class="message profile-message" aria-live="polite"></p>
+        </div>
+      </section>
 
-      <section class="sidebar-card">
+      <section class="sidebar-card overview-card">
         <p class="sidebar-label">Overview</p>
         <div class="mini-stat">
           <span>Wallet balance</span>
@@ -38,18 +53,15 @@
           <span>Total entries</span>
           <strong id="expenseCount">0</strong>
         </div>
-      </section>
-
-      <section class="sidebar-card wallet-card">
-        <p class="sidebar-label">Wallet balance</p>
         <form id="walletForm" class="wallet-form">
-          <label class="budget-field">
-            <span>Remaining balance</span>
+          <label class="wallet-inline">
+            <span>Update wallet</span>
             <input id="walletBalanceInput" type="number" min="0" step="0.01" placeholder="1000" />
           </label>
-          <p class="wallet-note">Enter the amount left in your e-wallet, then save it here.</p>
-          <p id="walletMessage" class="message" aria-live="polite"></p>
-          <button id="walletSaveBtn" class="ghost-btn wallet-save" type="submit">Save balance</button>
+          <div class="wallet-inline-actions">
+            <p id="walletMessage" class="message" aria-live="polite"></p>
+            <button id="walletSaveBtn" class="ghost-btn wallet-save" type="submit">Save</button>
+          </div>
         </form>
       </section>
 
@@ -61,18 +73,21 @@
       <section class="sidebar-card budget-card">
         <p class="sidebar-label">Budget goals</p>
         <p class="card-note">Monthly target and category goals live here. Scroll a little lower if you do not see every field on smaller screens.</p>
-        <div class="budget-summary">
-          <div>
-            <span>Monthly goal</span>
-            <strong id="budgetMonthlyText">0.00</strong>
+        <div class="budget-gauge-wrap">
+          <div id="budgetProgress" class="budget-gauge">
+            <div class="budget-gauge-inner">
+              <div>
+                <span>Monthly</span>
+                <strong id="budgetMonthlyText">0.00</strong>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="budget-summary">
           <div>
             <span>Remaining</span>
             <strong id="budgetRemainingText">0.00</strong>
           </div>
-        </div>
-        <div class="budget-bar">
-          <div id="budgetProgress" class="budget-bar-fill"></div>
         </div>
         <form id="budgetForm" class="budget-form">
           <label class="budget-field">
@@ -117,58 +132,22 @@
     <section class="main-panel">
       <header class="hero">
         <div class="hero-copy-wrap">
-          <p class="eyebrow">Money at a glance</p>
-          <h2>Track, add, and review spending without leaving the page.</h2>
+          <p class="eyebrow">Your financial journey at a glance</p>
+          <h2>Welcome to Personal Expense Tracker.</h2>
           <p class="hero-copy">
-            This dashboard connects directly to your authenticated expense API. Add a record, refresh the list, and keep the session secured with your login cookie.
+            Track your daily expenses, manage your budget, and gain better control of your finances.
           </p>
         </div>
         <div class="hero-card">
           <p>Quick total</p>
           <strong id="quickTotal">0.00</strong>
-          <span>Updated from your current expense list</span>
+          <span id="heroSync">Synced just now</span>
           <div class="hero-chip-row">
             <span class="hero-chip">Live sync</span>
             <span class="hero-chip">Private session</span>
           </div>
         </div>
       </header>
-
-      <section class="panel coach-panel">
-        <div class="panel-head">
-          <div>
-            <p class="panel-kicker">AI coach</p>
-            <h3>Ask for spending advice</h3>
-          </div>
-          <span class="pill">Responses API</span>
-        </div>
-
-        <div class="coach-layout">
-          <div class="coach-feed" id="coachFeed" aria-live="polite"></div>
-
-          <form id="coachForm" class="coach-form">
-            <label class="coach-input-wrap" for="coachPrompt">
-              <span>Question</span>
-              <textarea
-                id="coachPrompt"
-                rows="3"
-                placeholder="How can I reduce my spending this month?"
-              ></textarea>
-            </label>
-
-            <div class="coach-suggestions" aria-label="Quick prompts">
-              <button type="button" class="coach-chip" data-prompt="Where am I overspending the most?">Overspending</button>
-              <button type="button" class="coach-chip" data-prompt="Give me 3 ways to cut expenses this month.">Cut costs</button>
-              <button type="button" class="coach-chip" data-prompt="What is my biggest spending category and how can I reduce it?">Biggest category</button>
-            </div>
-
-            <div class="coach-actions">
-              <p id="coachStatus" class="message">Ask the coach anything about your spending.</p>
-              <button id="coachSubmitBtn" type="submit" class="primary-btn">Get advice</button>
-            </div>
-          </form>
-        </div>
-      </section>
 
       <section class="content-grid">
         <section class="panel form-panel">
@@ -224,7 +203,7 @@
           <div class="panel-head">
             <div>
               <p class="panel-kicker">Recent activity</p>
-              <h3>Latest expenses</h3>
+              <h3>Recent Spending Activity</h3>
             </div>
             <span id="lastSync" class="sync">Not synced yet</span>
           </div>
@@ -245,17 +224,42 @@
           <div id="trendChart" class="trend-chart" aria-label="Monthly spending trend"></div>
         </section>
 
-        <section class="panel recurring-panel">
+        <section class="panel coach-panel">
           <div class="panel-head">
             <div>
               <p class="panel-kicker">Recurring spend</p>
-              <h3>Likely repeated charges</h3>
+              <h3>AI Financial Coach</h3>
             </div>
-            <span class="pill">Detected</span>
+            <span class="pill">Coach</span>
           </div>
-          <div id="recurringList" class="recurring-list"></div>
+          <div class="coach-feed" id="coachFeed" aria-live="polite"></div>
+          <div class="coach-suggestions" aria-label="Quick prompts">
+            <button type="button" class="coach-chip" data-prompt="Where am I overspending the most?">Overspending</button>
+            <button type="button" class="coach-chip" data-prompt="Give me 3 ways to cut expenses this month.">Cut Costs</button>
+            <button type="button" class="coach-chip" data-prompt="What is my biggest spending category and how can I reduce it?">Biggest Category</button>
+          </div>
+          <div class="coach-modes" aria-label="Coach modes">
+            <button type="button" class="coach-chip coach-mode is-active" data-mode="friendly">Friendly</button>
+            <button type="button" class="coach-chip coach-mode" data-mode="strict">Strict</button>
+          </div>
+          <form id="coachForm" class="coach-form">
+            <div class="coach-composer">
+              <label class="coach-input-wrap">
+                <span class="sr-only">Question</span>
+                <textarea
+                  id="coachPrompt"
+                  rows="1"
+                  placeholder="Ask about spending, savings, or recurring bills..."
+                ></textarea>
+              </label>
+              <button type="submit" id="coachSubmitBtn" class="coach-send">Get Advice</button>
+            </div>
+            <p id="coachStatus" class="message coach-status">Ask the coach anything about your spending.</p>
+          </form>
         </section>
       </section>
+
+      <div id="recurringList" class="sr-only" aria-hidden="true"></div>
     </section>
   </main>
 </body>

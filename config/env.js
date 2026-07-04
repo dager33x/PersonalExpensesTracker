@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 
+const envName = process.env.NODE_ENV || 'development';
 
-dotenv.config({path: `.env.${process.env.NODE_ENV || 'development'}.local`});
+dotenv.config({ path: `.env.${envName}.local` });
+dotenv.config({ path: `.env.${envName}` });
 
 export const {
     PORT,
@@ -13,5 +15,10 @@ export const {
     NEXT_PUBLIC_API_UR,
     GEMINI_API_KEY,
     GOOGLE_API_KEY,
-    GEMINI_MODEL
+    GEMINI_MODEL,
+    SMTP_SERVER,
+    SMTP_PORT,
+    EMAIL,
+    PASSWORD,
+    APP_URL,
 } = process.env;

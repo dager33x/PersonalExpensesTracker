@@ -1,4 +1,3 @@
-const API_URL = "http://localhost:5500";
 const form = document.getElementById("login-form");
 const submitBtn = document.getElementById("submit-btn");
 const messageEl = document.getElementById("message");
@@ -21,6 +20,17 @@ function clearMessages() {
   errorEl.classList.remove("visible");
 }
 
+const params = new URLSearchParams(window.location.search);
+if (params.get("verified") === "1") {
+  showMessage("Email verified. You can sign in now.");
+} else if (params.get("verified") === "0") {
+  showError("Verification link is invalid or expired.");
+} else if (params.get("reset") === "1") {
+  showMessage("Password updated successfully. Sign in with your new password.");
+} else if (params.get("signup") === "1") {
+  showMessage("Account created. Check your email to verify your account.");
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearMessages();
@@ -37,7 +47,7 @@ form.addEventListener("submit", async (e) => {
   submitBtn.textContent = "Signing in...";
 
   try {
-    const response = await fetch(`${API_URL}/api/auth/sign-in`, {
+    const response = await fetch("/api/auth/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", // sends/receives the JWT cookie set by cookie-parser

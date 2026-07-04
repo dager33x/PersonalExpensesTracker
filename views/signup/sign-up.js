@@ -26,21 +26,24 @@ form.addEventListener("submit", async (e) => {
 
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
+  const sex = document.getElementById("sex").value;
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirm-password").value;
+  const normalizedPassword = password.trim();
+  const normalizedConfirmPassword = confirmPassword.trim();
 
-  if (!name || !email || !password || !confirmPassword) {
+  if (!name || !email || !sex || !password || !confirmPassword) {
     showError("Fill in every field to create your account.");
     return;
   }
 
-  if (password.length < 8) {
+  if (normalizedPassword.length < 8) {
     showError("Password must be at least 8 characters.");
     return;
   }
 
-  if (password !== confirmPassword) {
-    showError("Passwords don't match.");
+  if (normalizedPassword !== normalizedConfirmPassword) {
+    showError("Passwords don't match. Check for extra spaces.");
     return;
   }
 
@@ -52,8 +55,8 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ name, email, password }),
-    });
+      body: JSON.stringify({ name, email, sex, password: normalizedPassword }),
+      });
 
     const data = await response.json();
 
@@ -61,10 +64,10 @@ form.addEventListener("submit", async (e) => {
       throw new Error(data.message || "Could not create account");
     }
 
-    showMessage(data.message || "Account created. Redirecting to sign in...");
+    showMessage(data.message || "Account created. Check your inbox to verify your email.");
 
     setTimeout(() => {
-      window.location.href = "/dashboard";
+      window.location.href = "/login?signup=1";
     }, 1200);
   } catch (err) {
     showError(err.message || "Something went wrong");

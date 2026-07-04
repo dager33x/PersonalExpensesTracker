@@ -23,6 +23,43 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
     },
 
+    sex: {
+        type: String,
+        required: true,
+        enum: ["male", "female"],
+    },
+
+    emailVerified: {
+        type: Boolean,
+        default: false,
+        alias: "verifyEmail",
+    },
+
+    emailVerificationToken: {
+        type: String,
+        default: null,
+    },
+
+    emailVerificationExpires: {
+        type: Date,
+        default: null,
+    },
+
+    passwordResetToken: {
+        type: String,
+        default: null,
+    },
+
+    passwordResetExpires: {
+        type: Date,
+        default: null,
+    },
+
+    avatarUrl: {
+        type: String,
+        default: null,
+    },
+
     budgetGoals: {
         monthlyTotal: {
             type: Number,
