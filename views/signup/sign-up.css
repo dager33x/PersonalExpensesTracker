@@ -206,6 +206,42 @@ input:focus-visible {
   background: rgba(3, 8, 20, 0.72);
 }
 
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 52px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.6);
+  color: #d5f4ff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0;
+}
+
+.password-toggle:hover {
+  background: rgba(87, 199, 255, 0.12);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid rgba(87, 199, 255, 0.8);
+  outline-offset: 2px;
+}
+
 select {
   width: 100%;
   border: 1px solid rgba(148, 163, 184, 0.14);

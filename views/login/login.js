@@ -2,6 +2,7 @@ const form = document.getElementById("login-form");
 const submitBtn = document.getElementById("submit-btn");
 const messageEl = document.getElementById("message");
 const errorEl = document.getElementById("error");
+const passwordToggleButtons = document.querySelectorAll(".password-toggle");
 
 function showMessage(text) {
   messageEl.textContent = text;
@@ -19,6 +20,20 @@ function clearMessages() {
   messageEl.classList.remove("visible");
   errorEl.classList.remove("visible");
 }
+
+passwordToggleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.target;
+    const input = document.getElementById(targetId);
+    if (!input) return;
+
+    const isHidden = input.type === "password";
+    input.type = isHidden ? "text" : "password";
+    button.setAttribute("aria-pressed", String(isHidden));
+    button.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
+    button.textContent = isHidden ? "🙈" : "👁️";
+  });
+});
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("verified") === "1") {
